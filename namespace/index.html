@@ -7,15 +7,15 @@
     <title>Document</title>
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script>
-        const socket = io.connect('http://localhost:3000/');
+        const socket = io.connect('http://localhost:3000/namespace');
 
         const button = document.getElementById('btn');
-        
+
         function trigger() {
-            socket.emit('broadcastSayHello');
+            socket.emit('broadcast');
         }
 
-        socket.on('broadcast-trigger', () => {
+        socket.on('namespace-broadcast-emit', () => {
             document.getElementById("element").innerHTML = "New user connected";
         });
 
