@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+        const button = document.getElementById('btn');
+        const socket = io.connect('http://localhost:3000/');
+
+        function trigger() {
+            socket.emit('join-room', {name: `Sevki's Room`});
+        }
+
+        socket.on('new-join', (data) => {
+            document.getElementById('logs').innerHTML = 'Join user';
+            document.getElementById('userCount').innerHTML = `User count: ${data.userCount}`;
+        }); 
+    </script>
+</head>
+<body>
+    <button id="btn" onclick="trigger();">Join Room</button>
+    <div id="logs"></div>
+    <div id="userCount"></div>
+</body>
+</html>
