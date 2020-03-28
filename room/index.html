@@ -7,22 +7,31 @@
     <title>Document</title>
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script>
-        const button = document.getElementById('btn');
         const socket = io.connect('http://localhost:3000/');
 
-        function trigger() {
+        function join() {
             socket.emit('join-room', {name: `Sevki's Room`});
+        }
+
+        function leave() {
+            socket.emit('leave-room', {name: `Sevki's Room`});
         }
 
         socket.on('new-join', (data) => {
             document.getElementById('logs').innerHTML = 'Join user';
-            document.getElementById('userCount').innerHTML = `User count: ${data.userCount}`;
+            document.getElementById('userCount').innerHTML = `User count: ${data.count}`;
         }); 
+
+        socket.on('leavedRoom', (data) => {
+            document.getElementById('userCount').innerHTML = `User count: ${data.count}`;
+        });
     </script>
 </head>
 <body>
-    <button id="btn" onclick="trigger();">Join Room</button>
-    <div id="logs"></div>
+    <button onclick="join();">Join Room</button>
+    <button onclick="leave();">Leave Room</button>
+
+        <div id="logs"></div>
     <div id="userCount"></div>
 </body>
 </html>
